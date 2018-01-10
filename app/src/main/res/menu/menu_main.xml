@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.inventory.MainActivity">
+    <item
+        android:id="@+id/action_new_product"
+        android:orderInCategory="100"
+        android:title="New product"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_delete_all"
+        android:orderInCategory="100"
+        android:title="Delete All"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_show_summary"
+        android:orderInCategory="100"
+        android:title="Show Summary"
+        app:showAsAction="never" />
+
+</menu>
