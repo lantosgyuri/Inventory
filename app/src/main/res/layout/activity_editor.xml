@@ -2,24 +2,27 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/editor_activity_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/product_name_text"
             android:maxLines="1"
+            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:gravity="center"
+            android:textAppearance="?android:textAppearanceLarge"
             android:hint="Product name" />
 
         <EditText
@@ -86,6 +89,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:layout_margin="20dp"
             android:onClick="uploadImage"
             android:src="@drawable/greyhound"/>
 
@@ -96,6 +100,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:onClick="saveProduct"
+            android:background="@drawable/button_bg"
             android:text="Save"/>
 
     </LinearLayout>

@@ -1,24 +1,26 @@
 package com.example.android.inventory;
 
-import android.app.LoaderManager;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.android.inventory.data.InventoryContract.InventoryEntry;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,18 +28,19 @@ import java.io.InputStream;
 
 public class EditorActivity extends AppCompatActivity  {
 
-    TextView nameTextView;
-    TextView descriptionTextView;
-    TextView quantityView;
-    TextView priceView;
-    TextView mPriceTextView;
-    ImageView imageView;
-    Button saveButton;
-    Bitmap imageBitmap;
+    private TextView nameTextView;
+    private TextView descriptionTextView;
+    private TextView quantityView;
+    private TextView priceView;
+    private TextView mPriceTextView;
+    private ImageView imageView;
+    private Button saveButton;
+    private Bitmap imageBitmap;
+    private boolean editing = false;
 
     public static final int GALLERY_REQUEST = 1;
 
-
+    public static final String LOG_TAG = EditorActivity.class.getSimpleName();
 
 
     @Override
@@ -52,19 +55,89 @@ public class EditorActivity extends AppCompatActivity  {
         mPriceTextView = findViewById(R.id.product_mPrice_text);
         imageView = findViewById(R.id.image_view);
         saveButton = findViewById(R.id.save_button);
+
+        nameTextView.setOnTouchListener(mTouchListener);
+        descriptionTextView.setOnTouchListener(mTouchListener);
+        quantityView.setOnTouchListener(mTouchListener);
+        priceView.setOnTouchListener(mTouchListener);
+        mPriceTextView.setOnTouchListener(mTouchListener);
+        imageView.setOnTouchListener(mTouchListener);
+        saveButton.setOnTouchListener(mTouchListener);
+
     }
+
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            editing = true;
+            return false;
+        }
+    };
+
 
     //action an save Button
     public void saveProduct(View view) {
-        String nameString = nameTextView.getText().toString();
+
+        //we don't need the dialog screen
+        editing = false;
+
+        String nameString = nameTextView.getText().toString().trim();
+        //check that the name is valid or not
+        if( nameString.length() == 0 ) {
+            StyleableToast.makeText(this, "You have to give a valid name", R.style.Warning_Toast).show();
+            return;
+        }
+
         String descriptionString = descriptionTextView.getText().toString();
+        //check the quantity
         String quantityString = quantityView.getText().toString().trim();
+        if (quantityString.length() == 0) {
+            StyleableToast.makeText(this, "You have to give a valid quantity", R.style.Warning_Toast).show();
+            return;
+        }
+
+        int quantityInt = Integer.valueOf(quantityView.getText().toString());
+        if( quantityInt <= 0 ) {
+            StyleableToast.makeText(this, "You have to give a valid quantity", R.style.Warning_Toast).show();
+            return;
+        }
+
         String priceString = priceView.getText().toString().trim();
+        //check the price
+        if (priceString.length() == 0) {
+            StyleableToast.makeText(this, "You have to give a valid price", R.style.Warning_Toast).show();
+            return;
+        }
+        int priceInt = Integer.valueOf(priceView.getText().toString());
+        if( priceInt <= 0 ) {
+            StyleableToast.makeText(this, "You have to give a valid price", R.style.Warning_Toast).show();
+            return;
+        }
+
         String mPriceString = mPriceTextView.getText().toString().trim();
+        //check the mPrice
+        if (mPriceString.length() == 0) {
+            StyleableToast.makeText(this, "You have to give a valid merchant Price", R.style.Warning_Toast).show();
+            return;
+        }
+        int mPriceInt = Integer.valueOf(mPriceTextView.getText().toString());
+        if( mPriceInt <= 0 ) {
+            StyleableToast.makeText(this, "You have to give a valid merchant Price", R.style.Warning_Toast).show();
+            return;
+        }
+
 
         //getting the image and convert into byte array
         ByteArrayOutputStream imageByte = new ByteArrayOutputStream();
-        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, imageByte);
+
+        //make a basic bitmap when the user save, without uploading a photo
+        if(imageBitmap == null){
+            imageBitmap = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.greyhound);
+        }
+
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, imageByte);
+
         byte[] image = imageByte.toByteArray();
 
         ContentValues contentValues = new ContentValues();
@@ -79,9 +152,9 @@ public class EditorActivity extends AppCompatActivity  {
         Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, contentValues);
 
         if(newUri != null) {
-            Toast.makeText(this, "Insert was success", Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(this, "Insert was success" +newUri, R.style.Success_Toast).show();
         } else
-            Toast.makeText(this, "Insert was not success", Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(this, "Insert was not success", R.style.Warning_Toast).show();
 
         nameTextView.setText("");
         descriptionTextView.setText("");
@@ -89,8 +162,6 @@ public class EditorActivity extends AppCompatActivity  {
         priceView.setText("");
         mPriceTextView.setText("");
         imageView.setImageResource(R.drawable.greyhound);
-
-
 
     }
 
@@ -135,6 +206,7 @@ public class EditorActivity extends AppCompatActivity  {
 
                     //show image
                     imageView.setImageBitmap(imageBitmap);
+                    Log.e(LOG_TAG, "a kep le lett konvertálva0");
 
                 // catch if did not load
                 } catch (FileNotFoundException e) {
@@ -147,6 +219,74 @@ public class EditorActivity extends AppCompatActivity  {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        // the product does not edited
+        if (!editing) {
+            super.onBackPressed();
+            return;
+        }
+
+        // Otherwise the product editing has started
+        DialogInterface.OnClickListener discardButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // The discard button is clicked
+                        finish();
+                    }
+                };
+
+        // Show dialog that there are unsaved changes
+        showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
+    //create unsaved changes warning
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        // set up the positive negative buttons
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("You have unsaved changes ");
+        builder.setPositiveButton("Discard", discardButtonClickListener);
+        builder.setNegativeButton("Keep editing", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // user clciked the keep editing, so dismiss
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+   //on bakck pressed in the menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (!editing) {
+                    NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                    return true;
+                }
+
+                DialogInterface.OnClickListener discardButtonClickListener =
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Discard button clicked, back to parent activity
+                                NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                            }
+                        };
+
+                showUnsavedChangesDialog(discardButtonClickListener);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+        }
 
 
 

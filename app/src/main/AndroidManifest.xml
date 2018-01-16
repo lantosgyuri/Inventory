@@ -21,17 +21,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditorActivity"
-                  android:label="Editor Activity">
+        <activity
+            android:name=".EditorActivity"
+            android:label="Add a product">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
         </activity>
-        <provider android:name=".data.InventoryProvider"
+
+        <activity
+            android:name=".EditProductActivity"
+            android:label="Edit product">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <provider
+            android:name=".data.InventoryProvider"
             android:authorities="com.example.android.inventory"
-            android:exported="false">
-        </provider>
+            android:exported="false"></provider>
+
     </application>
 
 </manifest>

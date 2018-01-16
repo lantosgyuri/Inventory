@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@drawable/main_activity_bg"
+    tools:context=".MainActivity"
+    android:id="@+id/main_layout">
 
     <ListView
         android:id="@+id/list_view_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/empty_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Empty view"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/empty_view_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Push the nose to add product"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+    </LinearLayout>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -27,6 +43,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="@android:color/white"
         android:scaleType="centerInside"
-        android:src="@drawable/fab_vector_nose"/>
+        android:src="@drawable/fab_vector_nose" />
 
 </RelativeLayout>

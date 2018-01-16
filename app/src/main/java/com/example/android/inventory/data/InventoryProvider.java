@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+
+
 import com.example.android.inventory.data.InventoryContract.InventoryEntry;
 
 /**
@@ -41,6 +43,9 @@ public class InventoryProvider extends ContentProvider {
 
     //database helper object
     private InventoryDbHelper mInvetnoryDbHelper;
+
+    Uri nullUri;
+
 
     @Override
     public boolean onCreate() {
@@ -106,26 +111,32 @@ public class InventoryProvider extends ContentProvider {
     //method for insertProduct
     private Uri insertProduct(Uri uri, ContentValues contentValues){
 
+        Log.e(LOG_TAG, "meghivta az insert profuktot");
+
         //check that all of the data is valid
-        String name = contentValues.getAsString(InventoryEntry.COLUMN_PRODUCT_NAME);
-        if (name == null) throw new IllegalArgumentException("You have to give a name");
 
-        Integer price = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_PRICE);
-        if (price == null || price <= 0) throw new IllegalArgumentException("You have to give a valid price");
+       String name = contentValues.getAsString(InventoryEntry.COLUMN_PRODUCT_NAME);
 
-        Integer quantity = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_QUANTITY);
-        if (quantity == null || quantity <= 0) throw new IllegalArgumentException("You have to give a valid quantity");
+           if (name.equals("") || name == null) throw new IllegalArgumentException("You have to give a valid price");
 
-        Integer mPrice = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE);
-        if (mPrice == null || mPrice <= 0) throw new IllegalArgumentException("You have to give a valid merchant price");
+           Integer price = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_PRICE);
+           if (price == null || price <= 0) throw new IllegalArgumentException("You have to give a valid price");
+
+           Integer quantity = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_QUANTITY);
+           if (quantity == null || quantity <= 0) throw new IllegalArgumentException("You have to give a valid quantity");
+
+           Integer mPrice = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE);
+           if (mPrice == null || mPrice <= 0) throw new IllegalArgumentException("You have to give a valid merchant price");
+
 
         // get database (writable)
         SQLiteDatabase database = mInvetnoryDbHelper.getWritableDatabase();
+        Log.e(LOG_TAG, "meghivta az irandó adatbázist");
 
         // insert product
         long id = database.insert(InventoryEntry.TABLE_NAME, null, contentValues);
 
-        //check the insert was succes
+        //check the insert was success
         if (id == -1){
             Log.e(LOG_TAG, "Failed to insert " + uri);
             return null;
@@ -133,6 +144,8 @@ public class InventoryProvider extends ContentProvider {
 
         //send notify for all listener
         getContext().getContentResolver().notifyChange(uri,null);
+
+        Log.e(LOG_TAG, "Vissza megy az urika");
 
         //return the uri with the new product ID
         return ContentUris.withAppendedId(uri, id);
@@ -168,7 +181,7 @@ public class InventoryProvider extends ContentProvider {
 
         if (contentValues.containsKey(InventoryEntry.COLUMN_PRODUCT_NAME)) {
             String name = contentValues.getAsString(InventoryEntry.COLUMN_PRODUCT_NAME);
-            if (name == null) throw new IllegalArgumentException("You have to give a name");
+            if (name == null ||name.equals("")) throw new IllegalArgumentException("You have to give a name");
         }
 
         if (contentValues.containsKey(InventoryEntry.COLUMN_PRODUCT_PRICE)) {
@@ -222,7 +235,7 @@ public class InventoryProvider extends ContentProvider {
 
             case PRODUCTS_ID:
                 //delete single row
-                selection = InventoryEntry._ID +"/?";
+                selection = InventoryEntry._ID +"=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(InventoryEntry.TABLE_NAME, selection,
                         selectionArgs);
@@ -251,4 +264,5 @@ public class InventoryProvider extends ContentProvider {
             default: throw new IllegalArgumentException(" Unknow uri: " + uri + "with match" + match);
         }
     }
+
 }
