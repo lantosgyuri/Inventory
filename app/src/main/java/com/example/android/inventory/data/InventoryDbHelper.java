@@ -16,7 +16,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "inventory.db";
 
     //db version number for check the database schema change
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     //constructor
     public InventoryDbHelper(Context context){
@@ -39,7 +39,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
 
         String SQL_CREATE_SUMMARY_TABLE = "CREATE TABLE "
                 + InventoryContract.InventoryEntry.SUMMARY_TABLE_NAME + " ("
-                + InventoryContract.InventoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + InventoryContract.InventoryEntry._IDS + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + InventoryContract.InventoryEntry.COLUMN_SUMMARY_NAME + " TEXT NOT NULL, "
                 + InventoryContract.InventoryEntry.COLUMN_SUMMARY_PRICE + " INTEGER NOT NULL, "
                 + InventoryContract.InventoryEntry.COLUMN_SUMMARY_MERCHANT_PRICE + " INTEGER NOT NULL, "
@@ -47,12 +47,17 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
 
         //execute the SQL statement
         sqLiteDatabase.execSQL(SQL_CREATE_PRODUCTS_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_SUMMARY_TABLE);
 
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        // on upgrade drop older tables
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + InventoryContract.InventoryEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + InventoryContract.InventoryEntry.SUMMARY_TABLE_NAME);
+        // create new tables
+        onCreate(sqLiteDatabase);
     }
 }

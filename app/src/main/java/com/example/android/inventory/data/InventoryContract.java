@@ -30,6 +30,9 @@ public class InventoryContract {
         //acces the content URI
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PRODUCTS);
 
+        //acces the summary URI
+        public static final Uri SUMMARY_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_SUMMARY);
+
         //MIME TYPE basic URI
         public static final String CONTENT_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/"
                 + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
@@ -37,6 +40,11 @@ public class InventoryContract {
         //MIME TYPE content URI
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/"
                 + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
+
+        //MIME TYPE Summary URI
+        public static final String SUMMARY_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/"
+                + CONTENT_AUTHORITY + "/" + PATH_SUMMARY;
+
 
         //Products table
         public final static String TABLE_NAME = "products";

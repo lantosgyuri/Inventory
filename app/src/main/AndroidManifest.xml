@@ -28,7 +28,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".EditProductActivity"
             android:label="Edit product">
@@ -37,15 +36,24 @@
                 android:value=".MainActivity" />
         </activity>
 
-        <activity android:name=".ItemDescriptionPopUp"
+        <activity
+            android:name=".ItemDescriptionPopUp"
             android:label="Product description"
             android:theme="@style/AppTheme.PopUp">
+        </activity>
+
+        <activity
+            android:name=".SummaryActivity"
+            android:label="Sale Summary">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
 
         <provider
             android:name=".data.InventoryProvider"
             android:authorities="com.example.android.inventory"
-            android:exported="false"></provider>
+            android:exported="false" />
 
     </application>
 

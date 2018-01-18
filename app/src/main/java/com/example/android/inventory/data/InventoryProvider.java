@@ -27,24 +27,28 @@ public class InventoryProvider extends ContentProvider {
     //URI matcher for one single product
     private static final int PRODUCTS_ID = 2;
 
+    //URI matcher for Summary table
+    private static final int SUMMARY = 3;
+
     //URI matcher object to match content URI with code
     private static final UriMatcher sURiMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     //static initializer (runs first, every time when this lass called)
     // for all content uri pattern
     static{
-        // URI pattern for the table
+        // URI pattern for the products table
         sURiMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_PRODUCTS, PRODUCTS);
 
         // URi pattern for one single row (# - place for the number of the ID)
         sURiMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_PRODUCTS + "/#", PRODUCTS_ID);
 
+        //URI pattern for the summary table
+        sURiMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_SUMMARY, SUMMARY);
+
     }
 
     //database helper object
     private InventoryDbHelper mInvetnoryDbHelper;
-
-    Uri nullUri;
 
 
     @Override
@@ -83,6 +87,12 @@ public class InventoryProvider extends ContentProvider {
                         selection, selectionArgs, null, null, sortOrder);
                 break;
 
+            case SUMMARY:
+                //for multiple rows
+                cursor = database.query(InventoryEntry.SUMMARY_TABLE_NAME, projection,
+                        selection, selectionArgs, null, null, sortOrder);
+                break;
+
             default:
                 throw new IllegalArgumentException("Cannot query unknow URI " + uri);
 
@@ -102,6 +112,9 @@ public class InventoryProvider extends ContentProvider {
         switch (match) {
             case PRODUCTS:
                 return insertProduct(uri, contentValues);
+
+            case SUMMARY:
+                return insertSale(uri, contentValues);
 
             default:
                 throw new IllegalArgumentException("Insert is not supported for: " +uri);
@@ -150,6 +163,28 @@ public class InventoryProvider extends ContentProvider {
         //return the uri with the new product ID
         return ContentUris.withAppendedId(uri, id);
     }
+
+    public Uri insertSale(Uri uri, ContentValues contentValues){
+
+        SQLiteDatabase database = mInvetnoryDbHelper.getWritableDatabase();
+
+        long summaryId = database.insert(InventoryEntry.SUMMARY_TABLE_NAME, null, contentValues);
+
+        //check the insert was success
+        if (summaryId == -1){
+            Log.e(LOG_TAG, "Failed to insert Summary " + uri);
+            return null;
+        }
+
+        //send notify for all listener
+        getContext().getContentResolver().notifyChange(uri,null);
+
+        Log.e(LOG_TAG, "Vissza megy az urika SUMMARY");
+
+        //return the uri with the new product ID
+        return ContentUris.withAppendedId(uri, summaryId);
+    }
+
 
     @Override
     public int update (Uri uri, ContentValues contentValues, String selection,
@@ -260,6 +295,9 @@ public class InventoryProvider extends ContentProvider {
 
             case PRODUCTS_ID:
                 return InventoryEntry.CONTENT_ITEM_TYPE;
+
+            case SUMMARY:
+                return InventoryEntry.SUMMARY_LIST_TYPE;
 
             default: throw new IllegalArgumentException(" Unknow uri: " + uri + "with match" + match);
         }

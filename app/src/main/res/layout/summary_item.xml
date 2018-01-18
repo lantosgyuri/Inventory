@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/summary_timestamp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="kmgrknbrk"
+        android:textColor="@android:color/holo_green_dark"
+        android:textAppearance="?android:textAppearanceMedium"/>
+
+    <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:gravity="center">
+    <TextView
+        android:id="@+id/summary_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="name"/>
+
+    <TextView
+        android:id="@+id/summary_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="88888"/>
+
+    <TextView
+        android:id="@+id/summary_item_mPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="45745"/>
+
+   </LinearLayout>
+
+    <TextView
+        android:id="@+id/summary_profit_view"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="kmgrknbrk"
+        android:textColor="@android:color/holo_red_dark"
+        android:textAppearance="?android:textAppearanceMedium"/>
+
+
+
+</LinearLayout>

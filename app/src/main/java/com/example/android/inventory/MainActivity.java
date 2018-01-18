@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     return true;
 
                 case R.id.action_show_summary:
+                    showSummary();
 
                     return true;
             }
@@ -139,6 +140,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             Intent intent = new Intent(this, EditorActivity.class);
             startActivity(intent);
 
+        }
+        public void showSummary(){
+            Intent intent = new Intent(this, SummaryActivity.class);
+            startActivity(intent);
 
         }
 
@@ -160,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     InventoryEntry.COLUMN_PRODUCT_DESCRIPTION,
                     InventoryEntry.COLUMN_PRODUCT_QUANTITY,
                     InventoryEntry.COLUMN_PRODUCT_PRICE,
+                    InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE,
                     InventoryEntry.COLUMN_PRODUCT_PHOTO };
 
 

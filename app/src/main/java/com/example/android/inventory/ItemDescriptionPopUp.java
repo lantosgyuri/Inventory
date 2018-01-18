@@ -99,7 +99,7 @@ public class ItemDescriptionPopUp  extends AppCompatActivity implements
             ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
 
-            popUpTextView.setText(productDescription);
+            if(productDescription.length() != 0 ) popUpTextView.setText(productDescription);
             setTitle("Description of: " + name);
             popUpImageView.setImageBitmap(theImage);
 
