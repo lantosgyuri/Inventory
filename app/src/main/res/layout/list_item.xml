@@ -62,8 +62,17 @@
             android:text="Sale"
             android:focusable="false"/>
 
+        <TextView
+            android:id="@+id/stockWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_alignParentBottom="true"
+            android:textColor="@android:color/holo_red_dark"/>
+
 
     </RelativeLayout>
+
 
 
 </LinearLayout>

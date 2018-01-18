@@ -28,7 +28,7 @@ public class ItemClickListener extends AppCompatActivity implements View.OnClick
         mTextView = textView;
         mId = id;
         mContext = context;
-        productUri = Uri.parse("content://com.example.android.inventory/" +mId);
+        productUri = Uri.parse("content://com.example.android.inventory/products/" + mId);
     }
 
 
@@ -39,10 +39,12 @@ public class ItemClickListener extends AppCompatActivity implements View.OnClick
             mTextView.setText("In stock: " + Integer.toString(mQuantity));
             String quantityString = Integer.toString(mQuantity);
 
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(InventoryEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
+            if(mQuantity != 0) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(InventoryEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
 
-            mContext.getContentResolver().update(productUri, contentValues, null, null);
+                mContext.getContentResolver().update(productUri, contentValues, null, null);
+            }
         }
 
 

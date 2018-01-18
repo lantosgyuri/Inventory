@@ -80,6 +80,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+        productListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // New intent for open EditorActivity
+                Intent intent = new Intent(MainActivity.this, ItemDescriptionPopUp.class);
+
+                //Represent the specific product Uri
+                Uri currentPetUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id);
+
+                //Set the URI on the data field of the intent
+                intent.setData(currentPetUri);
+
+                startActivity(intent);
+
+                return true;
+            }
+        });
+
 
 
         // Kick off the loader

@@ -1,8 +1,10 @@
 package com.example.android.inventory;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -47,6 +49,8 @@ public class EditProductActivity extends AppCompatActivity implements
     private EditText priceEditText;
     private EditText mPriceEditText;
     private ImageView imageView;
+
+    private String productName;
 
     public static final String LOG_TAG = EditorActivity.class.getSimpleName();
 
@@ -107,36 +111,36 @@ public class EditProductActivity extends AppCompatActivity implements
 
 
             // find the data in the cursor. Cursor should contain just one row
-        cursor.moveToFirst();
-        int nameColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_NAME);
-        int descriptionColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_DESCRIPTION);
-        int quantityColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY);
-        int priceColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE);
-        int mPriceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE);
-        int imageColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PHOTO);
+        if (cursor.moveToFirst()) {
+            int nameColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_NAME);
+            int descriptionColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_DESCRIPTION);
+            int quantityColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY);
+            int priceColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE);
+            int mPriceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE);
+            int imageColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PHOTO);
 
-        String productName = cursor.getString(nameColumnIndex);
-        String productDescription = cursor.getString(descriptionColumnIndex);
-        int productQuantity = cursor.getInt(quantityColumnIndex);
-        int productPrice = cursor.getInt(priceColumnIndex);
-        int mProductPrice = cursor.getInt(mPriceColumnIndex);
+            productName = cursor.getString(nameColumnIndex);
+            String productDescription = cursor.getString(descriptionColumnIndex);
+            int productQuantity = cursor.getInt(quantityColumnIndex);
+            int productPrice = cursor.getInt(priceColumnIndex);
+            int mProductPrice = cursor.getInt(mPriceColumnIndex);
 
-        byte[] image = cursor.getBlob(imageColumnIndex);
-        //get the image
-        ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
-        theImage= BitmapFactory.decodeStream(imageStream);
+            byte[] image = cursor.getBlob(imageColumnIndex);
+            //get the image
+            ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
+            theImage = BitmapFactory.decodeStream(imageStream);
 
-        nameEditText.setText(productName);
-        descriptionEditText.setText(productDescription);
-        quantityEditText.setText(Integer.toString(productQuantity));
-        priceEditText.setText(Integer.toString(productPrice));
-        mPriceEditText.setText(Integer.toString(mProductPrice));
-        imageView.setImageBitmap(theImage);
-
-
-        Log.e(LOG_TAG, "az adatok mevannak");
+            nameEditText.setText(productName);
+            descriptionEditText.setText(productDescription);
+            quantityEditText.setText(Integer.toString(productQuantity));
+            priceEditText.setText(Integer.toString(productPrice));
+            mPriceEditText.setText(Integer.toString(mProductPrice));
+            imageView.setImageBitmap(theImage);
 
 
+            Log.e(LOG_TAG, "az adatok mevannak");
+
+        }
 
     }
 
@@ -300,15 +304,56 @@ public class EditProductActivity extends AppCompatActivity implements
 
     public void deleteProduct(){
 
-        int rowDeleted = getContentResolver().delete(CurrentProductUri, null, null);
-        Log.e(LOG_TAG, "torles sikeres");
+        // Otherwise the product editing has started
+        DialogInterface.OnClickListener deleteButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int rowDeleted = getContentResolver().delete(CurrentProductUri, null, null);
+                        Log.e(LOG_TAG, "torles sikeres");
 
-        finish();
+                        finish();
+                    }
+                };
+
+        // Show dialog that there are unsaved changes
+        showDeleteDialog(deleteButtonClickListener);
 
     }
 
 
+    private void showDeleteDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        // set up the positive /negative buttons
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Delete product?");
+        builder.setPositiveButton("Delete", discardButtonClickListener);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // user clciked "no", so dismiss
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
 
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
+    public void orderMore (View view) {
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"shipping@shipper.com" });
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, " Order more stuff");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, " We will order more from these product:\n" +
+               productName + "\n " +
+                "Quntity: (Please write here your required quantity) \n"+
+                " Best regards, \n  PETSHOP TEAM");
+
+        startActivity(Intent.createChooser(emailIntent, "Send Email"));
+    }
 
 }

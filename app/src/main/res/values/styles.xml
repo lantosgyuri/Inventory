@@ -38,7 +38,9 @@
         <item name="length">LONG</item>
     </style>
 
-
-
+    <style name="AppTheme.PopUp" >
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
 
 </resources>

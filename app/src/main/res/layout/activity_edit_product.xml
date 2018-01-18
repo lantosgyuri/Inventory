@@ -147,20 +147,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/button_bg"
-                android:onClick="saveProduct"
+                android:onClick="orderMore"
                 android:padding="10dp"
                 android:layout_marginBottom="40dp"
                 android:text="Order more" />
 
-            <Button
-                android:id="@+id/delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/button_bg"
-                android:onClick="saveProduct"
-                android:padding="10dp"
-                android:text="Delete Product" />
 
         </LinearLayout>
 

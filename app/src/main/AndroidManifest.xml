@@ -37,6 +37,11 @@
                 android:value=".MainActivity" />
         </activity>
 
+        <activity android:name=".ItemDescriptionPopUp"
+            android:label="Product description"
+            android:theme="@style/AppTheme.PopUp">
+        </activity>
+
         <provider
             android:name=".data.InventoryProvider"
             android:authorities="com.example.android.inventory"

@@ -45,17 +45,16 @@ public class InventoryCursorAdapter extends CursorAdapter {
         TextView quantityTextView = view.findViewById(R.id.quantity);
         ImageView imageView = view.findViewById(R.id.image);
         Button saleButton = view.findViewById(R.id.sale_button);
+        TextView stockWarningTextView = view.findViewById(R.id.stockWarning);
 
         //get the column indexes
         int nameColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_NAME);
-        int descriptionColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_DESCRIPTION);
         int quantityColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY);
         int priceColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE);
         int imageColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PHOTO);
 
         long id = cursor.getLong(cursor.getColumnIndex("_id"));
         String productName = cursor.getString(nameColumnIndex);
-        String description = cursor.getString(descriptionColumnIndex);
         int productQuantity = cursor.getInt(quantityColumnIndex);
         int productPrice = cursor.getInt(priceColumnIndex);
         byte[] image=cursor.getBlob(imageColumnIndex);
@@ -68,10 +67,10 @@ public class InventoryCursorAdapter extends CursorAdapter {
         priceTextView.setText(Integer.toString(productPrice) + " €");
         imageView.setImageBitmap(theImage);
 
+        if(productQuantity < 5) stockWarningTextView.setText("You are going out of stock!!");
+
         saleButton.setOnClickListener(new ItemClickListener(context, id, productQuantity, quantityTextView));
 
     }
-
-
 
 }
