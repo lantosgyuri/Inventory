@@ -48,22 +48,26 @@ public class ItemClickListener extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         if (mQuantity > 0) {
             mQuantity--;
-            mTextView.setText("In stock: " + Integer.toString(mQuantity));
+            mTextView.setText("In stock: "+ Integer.toString(mQuantity));
             String quantityString = Integer.toString(mQuantity);
 
             if(mQuantity != 0) {
+                //update the database with the new quantity
                 ContentValues contentValuesProduct = new ContentValues();
                 contentValuesProduct.put(InventoryEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
 
                 mContext.getContentResolver().update(productUri, contentValuesProduct, null, null);
 
+                //make a ContentValues object with the product details.
                 ContentValues contentValuesSummary = new ContentValues();
                 contentValuesSummary.put(InventoryEntry.COLUMN_SUMMARY_NAME, mName);
                 contentValuesSummary.put(InventoryEntry.COLUMN_SUMMARY_PRICE, memberPrice);
                 contentValuesSummary.put(InventoryEntry.COLUMN_SUMMARY_MERCHANT_PRICE, mMerchantPrice);
 
+                //save in the summary table
+
                 mContext.getContentResolver().insert(InventoryEntry.SUMMARY_URI, contentValuesSummary);
-                Log.e(LOG_TAG, "Mentve van az eladás");
+                Log.e(LOG_TAG, "Sale is saved");
 
 
             }

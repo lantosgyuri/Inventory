@@ -61,7 +61,7 @@ public class SummaryActivity extends AppCompatActivity implements LoaderManager.
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         summaryCursorAdapter.swapCursor(data);
 
-        // calcuate the profit Summary
+        // calculate the profit Summary
         if (data.moveToFirst()){
             do{
                 //get the Price and Merchant PRice
@@ -73,7 +73,7 @@ public class SummaryActivity extends AppCompatActivity implements LoaderManager.
 
                 profitSummary += itemProfit;
 
-                //calculate the qauntity of sales
+                //calculate the quantity of sales
                 saleSummary++;
 
             }while(data.moveToNext());
@@ -82,8 +82,8 @@ public class SummaryActivity extends AppCompatActivity implements LoaderManager.
         TextView summaryProfit = findViewById(R.id.summary_profit_text);
         TextView summarySale =  findViewById(R.id.summary_sale_text);
 
-        summaryProfit.setText("Your profit summary is: " + profitSummary + " €");
-        summarySale.setText("You have sold " + saleSummary + " product ");
+        summaryProfit.setText(getString(R.string.summary_profit) + profitSummary + " €");
+        summarySale.setText(getString(R.string.summary_sold) + saleSummary );
         }
 
     @Override

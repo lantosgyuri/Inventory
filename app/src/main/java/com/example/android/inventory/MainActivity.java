@@ -22,9 +22,6 @@ import android.widget.ListView;
 import com.example.android.inventory.data.InventoryContract.InventoryEntry;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
-import java.net.URI;
-import java.util.Set;
-
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -149,11 +146,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         public void deleteAll(){
             int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
-            Log.e(LOG_TAG, "törölt sorok: " + rowsDeleted);
+            Log.e(LOG_TAG, "Deleted rows: " + rowsDeleted);
         }
 
         public void makeDeleteToast(){
-            StyleableToast.makeText(this, "All items deleted", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_all_item_deleted), R.style.Warning_Toast).show();
         }
 
     @Override
@@ -180,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.e(LOG_TAG, "a loader befejezte a feloltest");
+        Log.e(LOG_TAG, "The loader load is done");
            inventoryCursorAdapter.swapCursor(data);
     }
 

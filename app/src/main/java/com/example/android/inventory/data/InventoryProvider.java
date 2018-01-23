@@ -79,7 +79,7 @@ public class InventoryProvider extends ContentProvider {
                 break;
 
             case PRODUCTS_ID:
-                //contain only one row,  get the ID --- ? for ID the number
+                //contain only one row,  get the ID. ? for ID the number
                 selection = InventoryEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri))};
 
@@ -124,7 +124,7 @@ public class InventoryProvider extends ContentProvider {
     //method for insertProduct
     private Uri insertProduct(Uri uri, ContentValues contentValues){
 
-        Log.e(LOG_TAG, "meghivta az insert profuktot");
+        Log.e(LOG_TAG, "insert method get called");
 
         //check that all of the data is valid
 
@@ -144,7 +144,7 @@ public class InventoryProvider extends ContentProvider {
 
         // get database (writable)
         SQLiteDatabase database = mInvetnoryDbHelper.getWritableDatabase();
-        Log.e(LOG_TAG, "meghivta az irandó adatbázist");
+        Log.e(LOG_TAG, "database get called");
 
         // insert product
         long id = database.insert(InventoryEntry.TABLE_NAME, null, contentValues);
@@ -158,7 +158,7 @@ public class InventoryProvider extends ContentProvider {
         //send notify for all listener
         getContext().getContentResolver().notifyChange(uri,null);
 
-        Log.e(LOG_TAG, "Vissza megy az urika");
+        Log.e(LOG_TAG, "Uri comes back, notify send");
 
         //return the uri with the new product ID
         return ContentUris.withAppendedId(uri, id);
@@ -168,6 +168,7 @@ public class InventoryProvider extends ContentProvider {
 
         SQLiteDatabase database = mInvetnoryDbHelper.getWritableDatabase();
 
+        //no need to check the data, we just save the data when a product is sold.
         long summaryId = database.insert(InventoryEntry.SUMMARY_TABLE_NAME, null, contentValues);
 
         //check the insert was success
@@ -179,7 +180,7 @@ public class InventoryProvider extends ContentProvider {
         //send notify for all listener
         getContext().getContentResolver().notifyChange(uri,null);
 
-        Log.e(LOG_TAG, "Vissza megy az urika SUMMARY");
+        Log.e(LOG_TAG, "Summary: URI comes back, notify sent");
 
         //return the uri with the new product ID
         return ContentUris.withAppendedId(uri, summaryId);

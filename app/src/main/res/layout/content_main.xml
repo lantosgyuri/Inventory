@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Push the nose to add product"
+            android:text="@string/emptyView_text"
             android:textAppearance="?android:textAppearanceLarge" />
 
     </LinearLayout>

@@ -23,14 +23,16 @@
         </activity>
         <activity
             android:name=".EditorActivity"
-            android:label="Add a product">
+            android:label="Add a product"
+            android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".EditProductActivity"
-            android:label="Edit product">
+            android:label="Edit product"
+            android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

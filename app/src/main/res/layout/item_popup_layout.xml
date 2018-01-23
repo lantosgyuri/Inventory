@@ -13,16 +13,18 @@
    <ImageView
        android:id="@+id/popUp_imageView"
        android:layout_width="150dp"
-       android:layout_height="150dp" />
+       android:layout_height="150dp"
+       android:layout_marginTop="20dp"
+       android:layout_marginBottom="20dp"/>
 
     <TextView
         android:id="@+id/popUp_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nothing to show"
+        android:text="@string/pop_up_empty_text"
         android:padding="15dp"
         android:textColor="@android:color/white"
-        android:background="#80CDDC39"/>
+        android:background="#CDDC39"/>
 
     </LinearLayout>
 

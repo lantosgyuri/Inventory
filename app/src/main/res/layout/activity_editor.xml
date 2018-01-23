@@ -23,7 +23,7 @@
             android:layout_marginRight="40dp"
             android:gravity="center"
             android:textAppearance="?android:textAppearanceLarge"
-            android:hint="Product name" />
+            android:hint="@string/product_name" />
 
         <EditText
             android:id="@+id/product_description_text"
@@ -34,7 +34,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:hint="Description"
+            android:hint="@string/description"
             android:maxLines="10"
             android:minLines="4" />
 
@@ -47,7 +47,7 @@
             android:layout_marginRight="80dp"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:hint="Quantity"
+            android:hint="@string/quantity"
             android:inputType="number" />
 
         <EditText
@@ -59,7 +59,7 @@
             android:layout_marginRight="80dp"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:hint="Price"
+            android:hint="@string/price"
             android:inputType="number" />
 
         <EditText
@@ -70,7 +70,7 @@
             android:layout_marginRight="80dp"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:hint="Merchant Price"
+            android:hint="@string/merchant_price"
             android:inputType="number" />
     </LinearLayout>
 
@@ -101,7 +101,7 @@
             android:layout_weight="1"
             android:onClick="saveProduct"
             android:background="@drawable/button_bg"
-            android:text="Save"/>
+            android:text="@string/save"/>
 
     </LinearLayout>
 

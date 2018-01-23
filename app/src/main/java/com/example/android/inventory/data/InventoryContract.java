@@ -27,10 +27,10 @@ public class InventoryContract {
 
     public static final class InventoryEntry implements BaseColumns {
 
-        //acces the content URI
+        //access the content URI
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PRODUCTS);
 
-        //acces the summary URI
+        //access the summary URI
         public static final Uri SUMMARY_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_SUMMARY);
 
         //MIME TYPE basic URI

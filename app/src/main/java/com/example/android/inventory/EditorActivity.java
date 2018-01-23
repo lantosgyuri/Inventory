@@ -75,16 +75,17 @@ public class EditorActivity extends AppCompatActivity  {
     };
 
 
+
     //action an save Button
     public void saveProduct(View view) {
 
-        //we don't need the dialog screen
+        //we don't need the "Unsaved" changes dialog screen,
         editing = false;
 
         String nameString = nameTextView.getText().toString().trim();
         //check that the name is valid or not
         if( nameString.length() == 0 ) {
-            StyleableToast.makeText(this, "You have to give a valid name", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_name), R.style.Warning_Toast).show();
             return;
         }
 
@@ -92,37 +93,37 @@ public class EditorActivity extends AppCompatActivity  {
         //check the quantity
         String quantityString = quantityView.getText().toString().trim();
         if (quantityString.length() == 0) {
-            StyleableToast.makeText(this, "You have to give a valid quantity", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_quantity), R.style.Warning_Toast).show();
             return;
         }
 
         int quantityInt = Integer.valueOf(quantityView.getText().toString());
         if( quantityInt <= 0 ) {
-            StyleableToast.makeText(this, "You have to give a valid quantity", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_quantity), R.style.Warning_Toast).show();
             return;
         }
 
         String priceString = priceView.getText().toString().trim();
         //check the price
         if (priceString.length() == 0) {
-            StyleableToast.makeText(this, "You have to give a valid price", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_price), R.style.Warning_Toast).show();
             return;
         }
         int priceInt = Integer.valueOf(priceView.getText().toString());
         if( priceInt <= 0 ) {
-            StyleableToast.makeText(this, "You have to give a valid price", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_price), R.style.Warning_Toast).show();
             return;
         }
 
         String mPriceString = mPriceTextView.getText().toString().trim();
         //check the mPrice
         if (mPriceString.length() == 0) {
-            StyleableToast.makeText(this, "You have to give a valid merchant Price", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_mPrice), R.style.Warning_Toast).show();
             return;
         }
         int mPriceInt = Integer.valueOf(mPriceTextView.getText().toString());
         if( mPriceInt <= 0 ) {
-            StyleableToast.makeText(this, "You have to give a valid merchant Price", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_mPrice), R.style.Warning_Toast).show();
             return;
         }
 
@@ -152,9 +153,9 @@ public class EditorActivity extends AppCompatActivity  {
         Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, contentValues);
 
         if(newUri != null) {
-            StyleableToast.makeText(this, "Insert was success" +newUri, R.style.Success_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_succes_insert), R.style.Success_Toast).show();
         } else
-            StyleableToast.makeText(this, "Insert was not success", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_not_succes_insert), R.style.Warning_Toast).show();
 
         nameTextView.setText("");
         descriptionTextView.setText("");
@@ -173,7 +174,7 @@ public class EditorActivity extends AppCompatActivity  {
         File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String pictureDirectoryPath = pictureDirectory.getPath();
 
-        // make the uri with galery file path
+        // make the uri with gallery file path
         Uri data = Uri.parse(pictureDirectoryPath);
 
         // set data type for intent, i need just photos
@@ -206,13 +207,13 @@ public class EditorActivity extends AppCompatActivity  {
 
                     //show image
                     imageView.setImageBitmap(imageBitmap);
-                    Log.e(LOG_TAG, "a kep le lett konvertálva0");
+                    Log.e(LOG_TAG, "The image have been converted");
 
                 // catch if did not load
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     // inform the user
-                    Toast.makeText(this, "Unable to open image", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.toast_unable_image_open, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -242,15 +243,14 @@ public class EditorActivity extends AppCompatActivity  {
     }
 
     //create unsaved changes warning
-    private void showUnsavedChangesDialog(
-            DialogInterface.OnClickListener discardButtonClickListener) {
+    private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
         // set up the positive negative buttons
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("You have unsaved changes ");
-        builder.setPositiveButton("Discard", discardButtonClickListener);
-        builder.setNegativeButton("Keep editing", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.dialog_message_unsaved);
+        builder.setPositiveButton(R.string.dialog_discard_button, discardButtonClickListener);
+        builder.setNegativeButton(R.string.dialog_editing_button, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // user clciked the keep editing, so dismiss
+                // user clicked the keep editing, so dismiss
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -262,7 +262,7 @@ public class EditorActivity extends AppCompatActivity  {
         alertDialog.show();
     }
 
-   //on bakck pressed in the menu
+   //on back pressed in the menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

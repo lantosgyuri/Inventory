@@ -74,9 +74,7 @@ public class EditProductActivity extends AppCompatActivity implements
         mPriceEditText = findViewById(R.id.detail_mPrice_text);
         imageView = findViewById(R.id.detail_image_view);
 
-        Log.e(LOG_TAG, "az oncreate megvan");
-
-
+        Log.e(LOG_TAG, "Oncreate done");
 
     }
 
@@ -93,11 +91,11 @@ public class EditProductActivity extends AppCompatActivity implements
                 InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE,
                 InventoryEntry.COLUMN_PRODUCT_PHOTO,};
 
-        Log.e(LOG_TAG,"cursor oncreate megvan");
+        Log.e(LOG_TAG,"cursor oncreate done");
 
         // this loader execute the query
         return new CursorLoader(this,   // Parent activity context
-                CurrentProductUri,         // Query the content URI for the current pet
+                CurrentProductUri,         // Query the content URI for the current Product
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments
@@ -138,7 +136,7 @@ public class EditProductActivity extends AppCompatActivity implements
             imageView.setImageBitmap(theImage);
 
 
-            Log.e(LOG_TAG, "az adatok mevannak");
+            Log.e(LOG_TAG, "Get all of the data is done");
 
         }
 
@@ -182,7 +180,7 @@ public class EditProductActivity extends AppCompatActivity implements
         String nameString = nameEditText.getText().toString().trim();
         //check that the name is valid or not
         if( nameString.length() == 0 ) {
-            StyleableToast.makeText(this, "You have to give a valid name", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_name), R.style.Warning_Toast).show();
             return;
         }
 
@@ -190,37 +188,37 @@ public class EditProductActivity extends AppCompatActivity implements
         //check the quantity
         String quantityString = quantityEditText.getText().toString().trim();
         if (quantityString.length() == 0) {
-            StyleableToast.makeText(this, "You have to give a valid quantity", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_quantity), R.style.Warning_Toast).show();
             return;
         }
 
         int quantityInt = Integer.valueOf(quantityEditText.getText().toString());
         if( quantityInt <= 0 ) {
-            StyleableToast.makeText(this, "You have to give a valid quantity", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_quantity), R.style.Warning_Toast).show();
             return;
         }
 
         String priceString = priceEditText.getText().toString().trim();
         //check the price
         if (priceString.length() == 0) {
-            StyleableToast.makeText(this, "You have to give a valid price", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_price), R.style.Warning_Toast).show();
             return;
         }
         int priceInt = Integer.valueOf(priceEditText.getText().toString());
         if( priceInt <= 0 ) {
-            StyleableToast.makeText(this, "You have to give a valid price", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_price), R.style.Warning_Toast).show();
             return;
         }
 
         String mPriceString = mPriceEditText.getText().toString().trim();
         //check the mPrice
         if (mPriceString.length() == 0) {
-            StyleableToast.makeText(this, "You have to give a valid merchant Price", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_mPrice), R.style.Warning_Toast).show();
             return;
         }
         int mPriceInt = Integer.valueOf(mPriceEditText.getText().toString());
         if( mPriceInt <= 0 ) {
-            StyleableToast.makeText(this, "You have to give a valid merchant Price", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_valid_mPrice), R.style.Warning_Toast).show();
             return;
         }
 
@@ -242,9 +240,9 @@ public class EditProductActivity extends AppCompatActivity implements
         int rowsAffected = getContentResolver().update(CurrentProductUri, contentValues, null, null);
 
         if(rowsAffected > 0) {
-            StyleableToast.makeText(this, "Insert was success", R.style.Success_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_succes_insert), R.style.Success_Toast).show();
         } else
-            StyleableToast.makeText(this, "Insert was not success", R.style.Warning_Toast).show();
+            StyleableToast.makeText(this, getString(R.string.toast_not_succes_insert), R.style.Warning_Toast).show();
 
     }
 
@@ -256,7 +254,7 @@ public class EditProductActivity extends AppCompatActivity implements
         File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String pictureDirectoryPath = pictureDirectory.getPath();
 
-        // make the uri with galery file path
+        // make the uri with gallery file path
         Uri data = Uri.parse(pictureDirectoryPath);
 
         // set data type for intent, i need just photos
@@ -289,13 +287,13 @@ public class EditProductActivity extends AppCompatActivity implements
 
                     //show image
                     imageView.setImageBitmap(theImage);
-                    Log.e(LOG_TAG, "a kep le lett konvertálva0");
+                    Log.e(LOG_TAG, "Image converted");
 
                     // catch if did not load
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     // inform the user
-                    Toast.makeText(this, "Unable to open image", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.toast_unable_image_open), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -309,8 +307,8 @@ public class EditProductActivity extends AppCompatActivity implements
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        int rowDeleted = getContentResolver().delete(CurrentProductUri, null, null);
-                        Log.e(LOG_TAG, "torles sikeres");
+                        getContentResolver().delete(CurrentProductUri, null, null);
+                        Log.e(LOG_TAG, "Delete success");
 
                         finish();
                     }
@@ -326,11 +324,11 @@ public class EditProductActivity extends AppCompatActivity implements
             DialogInterface.OnClickListener discardButtonClickListener) {
         // set up the positive /negative buttons
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Delete product?");
-        builder.setPositiveButton("Delete", discardButtonClickListener);
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.dialog_message_delete);
+        builder.setPositiveButton(R.string.diaog_button_delete, discardButtonClickListener);
+        builder.setNegativeButton(R.string.dialog_button_no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // user clciked "no", so dismiss
+                // user clicked "no", so dismiss
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -350,7 +348,7 @@ public class EditProductActivity extends AppCompatActivity implements
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, " Order more stuff");
         emailIntent.putExtra(Intent.EXTRA_TEXT, " We will order more from these product:\n" +
                productName + "\n " +
-                "Quntity: (Please write here your required quantity) \n"+
+                "Quantity: (Please write here your required quantity) \n"+
                 " Best regards, \n  PETSHOP TEAM");
 
         startActivity(Intent.createChooser(emailIntent, "Send Email"));

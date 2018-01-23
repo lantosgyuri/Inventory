@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -100,7 +99,7 @@ public class ItemDescriptionPopUp  extends AppCompatActivity implements
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
 
             if(productDescription.length() != 0 ) popUpTextView.setText(productDescription);
-            setTitle("Description of: " + name);
+            setTitle(getString(R.string.pop_up_header) + name);
             popUpImageView.setImageBitmap(theImage);
 
         }

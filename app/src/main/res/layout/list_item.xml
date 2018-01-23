@@ -59,7 +59,7 @@
             android:textColor="#2B3D4D"
             android:layout_marginTop="10dp"
             android:background="@drawable/button_bg"
-            android:text="Sale"
+            android:text="@string/sale_button_text"
             android:focusable="false"/>
 
         <TextView

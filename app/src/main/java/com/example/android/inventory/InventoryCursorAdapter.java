@@ -65,11 +65,11 @@ public class InventoryCursorAdapter extends CursorAdapter {
         Bitmap theImage= BitmapFactory.decodeStream(imageStream);
 
         nameTextView.setText(productName);
-        quantityTextView.setText("In stock: " + Integer.toString(productQuantity));
+        quantityTextView.setText(context.getString(R.string.in_stock) + Integer.toString(productQuantity));
         priceTextView.setText(Integer.toString(productPrice) + " €");
         imageView.setImageBitmap(theImage);
 
-        if(productQuantity < 5) stockWarningTextView.setText("You are going out of stock!!");
+        if(productQuantity < 5) stockWarningTextView.setText(R.string.going_out_of_stock);
 
         saleButton.setOnClickListener(new ItemClickListener(context, id, productQuantity, quantityTextView,
                 productName, productPrice, productMPrice));

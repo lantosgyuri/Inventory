@@ -44,11 +44,11 @@ public class SummaryCursorAdapter extends CursorAdapter {
         int mPrice = cursor.getInt(mPriceColumnIndex);
         String time = cursor.getString(timeColumnIndex);
 
-        nameText.setText("Name: " + name);
-        priceText.setText("Price: " + price);
-        mPriceText.setText("Merchant price: " + mPrice);
-        profitText.setText("Your profit on this product: " + (price - mPrice) + " €");
-        timeText.setText("Time of Sale: " +time);
+        nameText.setText(name);
+        priceText.setText(context.getString(R.string.price) + price);
+        mPriceText.setText(context.getString(R.string.merchant_price) + mPrice);
+        profitText.setText(context.getString(R.string.summary_your_proft) + (price - mPrice) + " €");
+        timeText.setText(context.getString(R.string.summary_sale_time) +time);
 
     }
 }
