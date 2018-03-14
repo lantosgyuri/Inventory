@@ -34,4 +34,10 @@
     <string name="summary_sold">Number of sold products:\u0020 </string>
     <string name="summary_sale_time">Time of Sale:\u0020 </string>
     <string name="summary_your_proft">Your profit on this product:\u0020 </string>
+    <string name="Valid_phone_number">You have to give a valid Phone number</string>
+    <string name="valid_phone_number_1">You have to give a valid Phone number</string>
+    <string name="valid_supplier_name">You have to give a valid supplier name</string>
+    <string name="supplier_phone_text_view">Supplier Phone Number</string>
+    <string name="supplier_name_textview">Supplier Name</string>
+    <string name="call_suplier">Call Supplier</string>
 </resources>

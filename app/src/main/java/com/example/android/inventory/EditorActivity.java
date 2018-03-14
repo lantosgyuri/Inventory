@@ -33,6 +33,8 @@ public class EditorActivity extends AppCompatActivity  {
     private TextView quantityView;
     private TextView priceView;
     private TextView mPriceTextView;
+    private TextView supplierName;
+    private TextView supplierPhone;
     private ImageView imageView;
     private Button saveButton;
     private Bitmap imageBitmap;
@@ -52,6 +54,8 @@ public class EditorActivity extends AppCompatActivity  {
         descriptionTextView = findViewById(R.id.product_description_text);
         quantityView = findViewById(R.id.product_quantity_text);
         priceView = findViewById(R.id.product_price_text);
+        supplierName = findViewById(R.id.product_supplier_name);
+        supplierPhone = findViewById(R.id.product_supplier_phone);
         mPriceTextView = findViewById(R.id.product_mPrice_text);
         imageView = findViewById(R.id.image_view);
         saveButton = findViewById(R.id.save_button);
@@ -115,6 +119,20 @@ public class EditorActivity extends AppCompatActivity  {
             return;
         }
 
+        String sName = supplierName.getText().toString().trim();
+        //check the name
+        if (sName.length() == 0) {
+            StyleableToast.makeText(this, getString(R.string.valid_supplier_name), R.style.Warning_Toast).show();
+            return;
+        }
+
+        //check the phone number valid or not
+        String sPhone= supplierPhone.getText().toString();
+        if( sPhone.length() == 0) {
+            StyleableToast.makeText(this, getString(R.string.valid_phone_number_1), R.style.Warning_Toast).show();
+            return;
+        }
+
         String mPriceString = mPriceTextView.getText().toString().trim();
         //check the mPrice
         if (mPriceString.length() == 0) {
@@ -146,6 +164,8 @@ public class EditorActivity extends AppCompatActivity  {
         contentValues.put(InventoryEntry.COLUMN_PRODUCT_DESCRIPTION, descriptionString);
         contentValues.put(InventoryEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
         contentValues.put(InventoryEntry.COLUMN_PRODUCT_PRICE, priceString);
+        contentValues.put(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME, sName);
+        contentValues.put(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, sPhone);
         contentValues.put(InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE, mPriceString);
         contentValues.put(InventoryEntry.COLUMN_PRODUCT_PHOTO, image);
 
@@ -162,6 +182,8 @@ public class EditorActivity extends AppCompatActivity  {
         quantityView.setText("");
         priceView.setText("");
         mPriceTextView.setText("");
+        supplierName.setText("");
+        supplierPhone.setText("");
         imageView.setImageResource(R.drawable.greyhound);
 
     }

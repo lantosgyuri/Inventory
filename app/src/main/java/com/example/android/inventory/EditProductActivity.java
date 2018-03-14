@@ -51,6 +51,7 @@ public class EditProductActivity extends AppCompatActivity implements
     private ImageView imageView;
 
     private String productName;
+    private String phoneNumber;
 
     public static final String LOG_TAG = EditorActivity.class.getSimpleName();
 
@@ -88,6 +89,7 @@ public class EditProductActivity extends AppCompatActivity implements
                 InventoryEntry.COLUMN_PRODUCT_DESCRIPTION,
                 InventoryEntry.COLUMN_PRODUCT_QUANTITY,
                 InventoryEntry.COLUMN_PRODUCT_PRICE,
+                InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE,
                 InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE,
                 InventoryEntry.COLUMN_PRODUCT_PHOTO,};
 
@@ -114,6 +116,7 @@ public class EditProductActivity extends AppCompatActivity implements
             int descriptionColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_DESCRIPTION);
             int quantityColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE);
+            int phoneNumberColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
             int mPriceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE);
             int imageColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PHOTO);
 
@@ -121,6 +124,7 @@ public class EditProductActivity extends AppCompatActivity implements
             String productDescription = cursor.getString(descriptionColumnIndex);
             int productQuantity = cursor.getInt(quantityColumnIndex);
             int productPrice = cursor.getInt(priceColumnIndex);
+            phoneNumber = cursor.getString(phoneNumberColumnIndex);
             int mProductPrice = cursor.getInt(mPriceColumnIndex);
 
             byte[] image = cursor.getBlob(imageColumnIndex);
@@ -352,6 +356,11 @@ public class EditProductActivity extends AppCompatActivity implements
                 " Best regards, \n  PETSHOP TEAM");
 
         startActivity(Intent.createChooser(emailIntent, "Send Email"));
+    }
+
+    public void callSupplier(View view){
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null));
+        startActivity(callIntent);
     }
 
 }

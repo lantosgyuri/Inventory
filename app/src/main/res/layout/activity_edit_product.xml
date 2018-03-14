@@ -152,6 +152,17 @@
                 android:layout_marginBottom="40dp"
                 android:text="@string/order_more" />
 
+            <Button
+                android:id="@+id/order_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_bg"
+                android:onClick="callSupplier"
+                android:padding="10dp"
+                android:layout_marginBottom="40dp"
+                android:text="@string/call_suplier" />
+
 
         </LinearLayout>
 

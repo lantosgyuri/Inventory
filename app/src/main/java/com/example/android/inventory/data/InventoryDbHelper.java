@@ -14,7 +14,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "inventory.db";
 
     //db version number for check the database schema change
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     //constructor
     public InventoryDbHelper(Context context){
@@ -33,6 +33,8 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
                 + InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE + " INTEGER NOT NULL, "
                 + InventoryContract.InventoryEntry.COLUMN_PRODUCT_PHOTO + " BLOB, "
                 + InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL, "
+                + InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME + " TEXT NOT NULL, "
+                + InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE + " TEXT NOT NULL, "
                 + InventoryContract.InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE + " INTEGER NOT NULL DEFAULT 0);";
 
         String SQL_CREATE_SUMMARY_TABLE = "CREATE TABLE "

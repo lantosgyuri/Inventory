@@ -130,13 +130,19 @@ public class InventoryProvider extends ContentProvider {
 
        String name = contentValues.getAsString(InventoryEntry.COLUMN_PRODUCT_NAME);
 
-           if (name.equals("") || name == null) throw new IllegalArgumentException("You have to give a valid price");
+           if (name.equals("") || name == null) throw new IllegalArgumentException("You have to give a valid name");
 
            Integer price = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_PRICE);
            if (price == null || price <= 0) throw new IllegalArgumentException("You have to give a valid price");
 
            Integer quantity = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_QUANTITY);
            if (quantity == null || quantity <= 0) throw new IllegalArgumentException("You have to give a valid quantity");
+
+           String supplierName = contentValues.getAsString(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME);
+           if (supplierName.equals("") || name == null) throw new IllegalArgumentException("You have to give a valid supplier Name");
+
+           String supplierPhone = contentValues.getAsString(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
+           if (supplierPhone.equals("") || name == null) throw new IllegalArgumentException("You have to give a valid phone number");
 
            Integer mPrice = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE);
            if (mPrice == null || mPrice <= 0) throw new IllegalArgumentException("You have to give a valid merchant price");
@@ -230,6 +236,16 @@ public class InventoryProvider extends ContentProvider {
             Integer quantity = contentValues.getAsInteger(InventoryEntry.COLUMN_PRODUCT_QUANTITY);
             if (quantity == null || quantity <= 0)
                 throw new IllegalArgumentException("You have to give a valid quantity");
+        }
+
+        if (contentValues.containsKey(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME)) {
+            String supplierName = contentValues.getAsString(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME);
+            if (supplierName == null || supplierName.equals("")) throw new IllegalArgumentException("You have to give a supplier name");
+        }
+
+        if (contentValues.containsKey(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE)) {
+            String supplierPhone = contentValues.getAsString(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
+            if (supplierPhone == null || supplierPhone.equals("")) throw new IllegalArgumentException("You have to give a phone number");
         }
 
         if (contentValues.containsKey(InventoryEntry.COLUMN_PRODUCT_MERCHANT_PRICE)) {

@@ -60,6 +60,10 @@ public class InventoryContract {
         public final static String COLUMN_PRODUCT_PHOTO= "photo";
         //quantity column
         public final static String COLUMN_PRODUCT_QUANTITY = "quantity";
+        //Supplier name column
+        public final static String COLUMN_PRODUCT_SUPPLIER_NAME = "supplierName";
+        //Supplier phone number column
+        public static final String COLUMN_PRODUCT_SUPPLIER_PHONE = "supplierPhone";
         //merchant price column
         public final static String COLUMN_PRODUCT_MERCHANT_PRICE= "mprice";
 

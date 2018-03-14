@@ -35,8 +35,8 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:hint="@string/description"
-            android:maxLines="10"
-            android:minLines="4" />
+            android:maxLines="4"
+            android:minLines="2" />
 
         <EditText
             android:id="@+id/product_quantity_text"
@@ -51,16 +51,16 @@
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/product_price_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:hint="@string/price"
-            android:inputType="number" />
+        android:id="@+id/product_price_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:hint="@string/price"
+        android:inputType="number" />
 
         <EditText
             android:id="@+id/product_mPrice_text"
@@ -72,12 +72,35 @@
             android:gravity="center"
             android:hint="@string/merchant_price"
             android:inputType="number" />
+
+        <EditText
+            android:id="@+id/product_supplier_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:hint="@string/supplier_name_textview" />
+
+        <EditText
+            android:id="@+id/product_supplier_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:hint="@string/supplier_phone_text_view" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_weight="1"
