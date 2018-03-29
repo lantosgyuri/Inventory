@@ -43,4 +43,9 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
+    <style name="DescriptionTextTehme">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Medium</item>
+    </style>
+
 </resources>

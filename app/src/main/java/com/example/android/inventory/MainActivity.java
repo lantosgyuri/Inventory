@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // New intent for open EditorActivity
-                Intent intent = new Intent(MainActivity.this, EditProductActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProductDetailsActivity.class);
 
                 //Represent the specific product Uri
                 Uri currentPetUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id);
@@ -80,8 +80,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         productListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+
                 // New intent for open EditorActivity
-                Intent intent = new Intent(MainActivity.this, ItemDescriptionPopUp.class);
+                Intent intent = new Intent(MainActivity.this, EditProductActivity.class);
 
                 //Represent the specific product Uri
                 Uri currentPetUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id);

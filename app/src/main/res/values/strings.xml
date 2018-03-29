@@ -40,4 +40,6 @@
     <string name="supplier_phone_text_view">Supplier Phone Number</string>
     <string name="supplier_name_textview">Supplier Name</string>
     <string name="call_suplier">Call Supplier</string>
+    <string name="supply_description">Supply:</string>
+    <string name="decrease_supply_button">Decrease Supply</string>
 </resources>
